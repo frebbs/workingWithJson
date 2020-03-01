@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Page</title>
+</head>
+<%- include ('partials/bootstrapCSS.ejs') %>
+<body>
+<%- include ('partials/navbar.ejs') %>
+
+
+<div class="row m-5">
+    <div class="col-sm-6 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h2>Sign up here</h2>
+                <form action="/api/createaccount" method="post">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" name="first_name" id="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" class="form-control" name="last_name" id="last_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password1">Password</label>
+                        <input type="password" class="form-control" name="password1" id="password1">
+                    </div>
+                    <div class="form-group">
+                        <label for="password2">Confirm Password</label>
+                        <input type="password" class="form-control" name="password2" id="password2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ('partials/bootstrapJS.ejs') %>
+</body>
+</html>
