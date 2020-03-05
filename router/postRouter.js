@@ -42,7 +42,8 @@ router.post('/createaccount', async(req, res) => {
             last_name: req.body.last_name,
             password: req.body.password1,
             email: req.body.email
-        }
+        };
+
     await queryDB.json
         .create(newUser)
         .then( (data) => {
@@ -58,6 +59,20 @@ router.post('/createaccount', async(req, res) => {
     }
 });
 
+router.post('/createpost', async (req, res) => {
+    // console.log(req.body);
+    const userPost = {
+        users_id: req.session.profile.id,
+        message_title: req.body.message_title,
+        message_content: req.body.message_content
+    };
+    await queryDB.messages
+        .createMessage(userPost)
+        .then(() => {
+            res.redirect('/members')
+        })
+        .catch(err => console.log(err));
+});
 
 router.post('/login', async (req, res) => {
     let findUser = await queryDB.json
@@ -99,7 +114,7 @@ router.post('/login', async (req, res) => {
         })
     }
 
-})
+});
 
 router.put('/update/:id', async(req, res) => {
 
@@ -126,35 +141,5 @@ router.put('/update/:id', async(req, res) => {
         res.redirect('/login')
     }
 });
-
-// Not Currently used
-router.post('/delete/:id', async(req, res) => {
-    let userID = req.params.id
-
-    await queryDB.json
-        .delete(userID)
-        .then( (data) => {
-            if(data) {
-                res.json({
-                    status: '🍻',
-                    message: 'User has been deleted',
-                    data: data
-                })
-            } else {
-                res.json({
-                    status: '💔',
-                    message: "Opps, couldn't find that user!",
-                })
-            }
-        })
-        .catch(err => {
-            res.json({
-                status: '💔',
-                message: 'Opps, bad data maybe? Check the below error',
-                ERROR: err
-            })
-        })
-})
-
 
 module.exports = router;
