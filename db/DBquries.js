@@ -48,6 +48,10 @@ module.exports = {
             return knex('users_table')
                 .join('user_messages', 'users_table.id', 'user_messages.users_id')
                 .where('users_table.id', id)
+        },
+        createMessage: function (message) {
+            return knex('user_messages')
+                .insert(message)
         }
     }
 };

@@ -4,12 +4,23 @@ const queryDB = require('../db/DBquries');
 // const {isAuth} = require('../helpers/authHelper');
 
 
-router.get('/', async(req, res) => {
+router.get('/', (req, res) => {
     if(req.session.login === true) {
         res.render('members/home', {profile: req.session.profile});
     } else {
         res.redirect('/login');
     }
+});
+
+router.get('/createpost', (req, res) => {
+    if(req.session.login === true) {
+        res.render('members/createPost', {
+            profile: req.session.profile
+        })
+    } else {
+        res.redirect('/login')
+    }
+
 });
 
 router.get('/logout', async (req, res) => {
@@ -37,7 +48,7 @@ router.get('/logout', async (req, res) => {
 
 });
 
-router.get('/profile/:id', async(req, res) => {
+router.get('/profile/:id', (req, res) => {
     if(req.session.login === true) {
         res.render('members/profile', {
             profile: req.session.profile
