@@ -79,9 +79,9 @@ router.post('/login', async (req, res) => {
             await queryDB.json
                 .addSession(findUser.id, req.sessionID)
                 .then(() => {
-                    res.cookie('name', findUser.first_name)
-                    res.cookie('profile', findUser.id)
-                    res.cookie('access', findUser.access_level)
+                    const { first_name, last_name, id, email, access_level } = findUser
+                    req.session.login = true
+                    req.session.profile = {id, first_name, last_name, email, access_level }
 
                     return res.redirect('/members')
                 })
@@ -111,6 +111,8 @@ router.put('/update/:id', async(req, res) => {
         await queryDB.json
             .update(req.params.id, req.body)
             .then(data => {
+                const { first_name, last_name, id, email, access_level } = data[0]
+                req.session.profile = {id, first_name, last_name, email, access_level }
                 return res.redirect('/members')
             })
             .catch(err => {
@@ -124,9 +126,6 @@ router.put('/update/:id', async(req, res) => {
         res.redirect('/login')
     }
 });
-
-
-
 
 // Not Currently used
 router.post('/delete/:id', async(req, res) => {

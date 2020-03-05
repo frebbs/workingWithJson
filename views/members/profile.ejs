@@ -15,26 +15,26 @@
 <div class="row m-5">
     <div class="col-sm-6 mx-auto">
         <div class="card">
-            <form class="p-2" action="/api/update/<%= userProfile.id%>?_method=PUT" method="post">
+            <form class="p-2" action="/api/update/<%= profile.id%>?_method=PUT" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">First name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name" value="<%= userProfile.first_name%>">
+                        <input type="text" class="form-control" name="first_name" id="first_name" value="<%= profile.first_name%>">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="last_name">Last name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name" value="<%= userProfile.last_name%>">
+                        <input type="text" class="form-control" name="last_name" id="last_name" value="<%= profile.last_name%>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" class="form-control" name="email" id="email" value="<%= userProfile.email%>">
+                    <input type="email" class="form-control" name="email" id="email" value="<%= profile.email%>">
                 </div>
-                <% if(userProfile.access_level < 2) { %>
+                <% if(profile.access_level < 2) { %>
                 <div class="form-group col-md-5">
-                    <label for="access_level"><b>Current Access level: <%= userProfile.access_level%></b></label>
+                    <label for="access_level"><b>Current Access level: <%= profile.access_level%></b></label>
                     <select id="access_level" name="access_level" class="form-control">
-                        <option value="<%= userProfile.access_level || 4%>" selected disabled hidden></option>
+                        <option value="<%= profile.access_level || 4%>" selected disabled hidden></option>
                         <option value="0">God Like</option>
                         <option value="1">Almost God</option>
                         <option value="2">Minion</option>
