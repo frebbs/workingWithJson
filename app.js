@@ -1,14 +1,12 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
-const session = require('express-session')
-var methodOverride = require('method-override')
-
+const session = require('express-session');
+const  methodOverride = require('method-override');
+const { v4: uuidv4 } = require('uuid');
 const rootRouter = require('./router/rootRouter');
 const membersRouter = require('./router/membersArea');
 const postRouter = require('./router/postRouter');
-
-
 const PORT = 9000;
 
 
@@ -20,6 +18,17 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
+app.use(session({
+    genid: (req) => {
+        return uuidv4()
+    },
+    secret: 'Dont Tell Anyone!',
+    resave: false,
+    saveUninitialized: true,
+    name: 'sessionID'
+}));
+
+
 
 // User routes
 app.use('/', rootRouter);

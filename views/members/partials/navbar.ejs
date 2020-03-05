@@ -9,7 +9,8 @@
                 <a class="nav-link" href="/members">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/members/profile/12">Profile</a>
+<!--                Need to add ability to dynamically assign the profile id, via cookies?-->
+                <a class="nav-link" href="/members/profile/<%= userID %>">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/members/logout">Logout</a>

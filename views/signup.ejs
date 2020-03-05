@@ -10,7 +10,13 @@
 <%- include ('partials/bootstrapCSS.ejs') %>
 <body>
 <%- include ('partials/navbar.ejs') %>
+<% if (errors.length > 0) {%>
+    <% errors.forEach((err) => { %>
+<div class="alert alert-warning"><%= err.text %></div>
+        <% }) %>
+<% } else { %>
 
+<% }%>
 
 <div class="row m-5">
     <div class="col-sm-6 mx-auto">

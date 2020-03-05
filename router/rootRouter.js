@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const queryDB = require('../db/DBquries');
 
 
@@ -10,17 +9,12 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-    res.render('signup')
+    res.render('signup', {errors: []})
 });
 
 router.get('/login', (req, res) => {
     res.render('login')
 });
-
-
-
-
-
 
 // Not used outside of DEV env
 router.get('/all', async (req, res) => {
@@ -44,9 +38,6 @@ router.get('/all', async (req, res) => {
 
 });
 
-
-
-
 router.get('/getAllMessagesByID/:id', async(req, res) => {
     await queryDB.messages
         .getAllByUserID(req.params.id)
@@ -64,6 +55,6 @@ router.get('/getAllMessagesByID/:id', async(req, res) => {
                 ERROR: err
             })
         })
-})
+});
 
 module.exports = router;

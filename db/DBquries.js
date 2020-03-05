@@ -27,6 +27,16 @@ module.exports = {
                 .update(user, 'id')
                 .returning('*');
         },
+        findBySessionID: (session) => {
+            return knex('users_table')
+                .where('session_data', session)
+                .first();
+        },
+        addSession: (id, session) => {
+            return knex('users_table')
+                .where('id', id)
+                .update('session_data', session)
+        },
         delete: (id) => {
             return knex('users_table')
                 .where('id', id)

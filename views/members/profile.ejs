@@ -30,6 +30,7 @@
                     <label for="email">Email Address</label>
                     <input type="email" class="form-control" name="email" id="email" value="<%= userProfile.email%>">
                 </div>
+                <% if(userProfile.access_level < 2) { %>
                 <div class="form-group col-md-5">
                     <label for="access_level"><b>Current Access level: <%= userProfile.access_level%></b></label>
                     <select id="access_level" name="access_level" class="form-control">
@@ -41,6 +42,7 @@
                         <option value="4">The Dammed</option>
                     </select>
                 </div>
+                <% } %>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
         </div>
