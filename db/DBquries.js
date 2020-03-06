@@ -45,7 +45,8 @@ module.exports = {
     },
     messages: {
         getAllByUserID: function (id) {
-            return knex('users_table')
+            return knex.select(['users_table.email','user_messages.message_title', 'user_messages.message_content', 'user_messages.created_on'])
+                .from('users_table')
                 .join('user_messages', 'users_table.id', 'user_messages.users_id')
                 .where('users_table.id', id)
         },

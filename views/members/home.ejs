@@ -11,11 +11,33 @@
 <body>
 <%- include ('partials/navbar.ejs') %>
 
+
+
 <div class="container-fluid">
     <div class="container">
         <h1>Hello <%= profile.first_name %></h1>
     </div>
 </div>
+
+<div class="row m-5">
+    <% if (userPosts.length === 0) { %>
+       <p>When you make your first post, these will be shown below. Until then.................</p>
+    <% } %>
+    <% userPosts.forEach( (post) => {  %>
+    <div class="col-8 mx-auto mb-5">
+        <div class="card">
+            <h5 class="card-header"><%= post.message_title%></h5>
+            <div class="card-body">
+                <h5 class="card-title"><%= post.message_content%></h5>
+                <hr>
+                <p class="card-text">Posted: <%= post.created_on%></p>
+<!--                <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+    </div>
+    <% }); %>
+</div>
+
 <%- include ('partials/bootstrapJS.ejs') %>
 </body>
 </html>

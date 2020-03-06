@@ -4,9 +4,15 @@ const queryDB = require('../db/DBquries');
 // const {isAuth} = require('../helpers/authHelper');
 
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+
     if(req.session.login === true) {
-        res.render('members/home', {profile: req.session.profile});
+        let userPosts = await queryDB.messages
+            .getAllByUserID(req.session.profile.id)
+            .then(data => { return data })
+            .catch(err => { console.log(err)});
+        console.log(userPosts);
+            res.render('members/home', {profile: req.session.profile, userPosts});
     } else {
         res.redirect('/login');
     }
