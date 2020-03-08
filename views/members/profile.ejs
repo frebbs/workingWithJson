@@ -11,10 +11,10 @@
 <body>
 <%- include ('partials/navbar.ejs') %>
 
-<h1>Members Profile</h1>
-<div class="row m-5">
-    <div class="col-sm-6 mx-auto">
-        <div class="card">
+<div class="container mt-5">
+    <h1>Members Profile</h1>
+    <div class="row">
+        <div class="col-sm-6">
             <form class="p-2" action="/api/update/<%= profile.id%>?_method=PUT" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -31,19 +31,36 @@
                     <input type="email" class="form-control" name="email" id="email" value="<%= profile.email%>">
                 </div>
                 <% if(profile.access_level < 2 && profile.access_level !== null) { %>
-                <div class="form-group col-md-5">
-                    <label for="access_level"><b>Current Access level: <%= profile.access_level%></b></label>
-                    <select id="access_level" name="access_level" class="form-control">
-                        <option value="<%= profile.access_level || 4%>" selected disabled hidden></option>
-                        <option value="0">God Like</option>
-                        <option value="1">Almost God</option>
-                        <option value="2">Minion</option>
-                        <option value="3">Servant</option>
-                        <option value="4">The Dammed</option>
-                    </select>
-                </div>
+                    <div class="form-group col-md-5">
+                        <label for="access_level"><b>Current Access level: <%= profile.access_level%></b></label>
+                        <select id="access_level" name="access_level" class="form-control">
+                            <option value="<%= profile.access_level || 4%>" selected disabled hidden></option>
+                            <option value="0">God Like</option>
+                            <option value="1">Almost God</option>
+                            <option value="2">Minion</option>
+                            <option value="3">Servant</option>
+                            <option value="4">The Dammed</option>
+                        </select>
+                    </div>
                 <% } %>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <form class="p-2" action="/api/uploadphoto" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="description">
+                        Name of Photo
+                    </label>
+                    <input type="text"  class="form-control" name="description" placeholder="Name your photo" id="description">
+                </div>
+                <div class="form-group">
+                    <label for="file">
+                        Name of Photo
+                    </label>
+                    <input type="file"  class="form-control" name="file" id="file" multiple="multiple">
+                </div>
+                <button class="btn btn-primary">Upload</button>
             </form>
         </div>
     </div>

@@ -6,6 +6,7 @@ const  methodOverride = require('method-override');
 const { v4: uuidv4 } = require('uuid');
 const rootRouter = require('./router/rootRouter');
 const membersRouter = require('./router/membersArea');
+const membersAdmin = require('./router/membersAdmin');
 const postRouter = require('./router/postRouter');
 const PORT = 9000;
 
@@ -33,6 +34,7 @@ app.use(session({
 // User routes
 app.use('/', rootRouter);
 app.use('/members', membersRouter);
+app.use('/members/admin', membersAdmin);
 app.use('/api', postRouter);
 
 

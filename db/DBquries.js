@@ -3,10 +3,10 @@ const knex = require('./knex');
 
 module.exports = {
     json: {
-        getAll: function () { // Working now
-            return knex('users_table')
-                .orderBy('id', 'asc')
-                .select();
+        getAllUsers: function() {
+            return knex.select(['id','first_name', 'last_name', 'email', 'access_level'])
+                .from('users_table')
+                .orderBy('last_name');
         },
         getOneByEmail: function (email) {
             return knex('users_table')
@@ -26,6 +26,12 @@ module.exports = {
                 .where('id', id)
                 .update(user, 'id')
                 .returning('*');
+        },
+        findByEmailForAuth: (email) => {
+            return knex.select(['email', 'session_data', 'access_level'])
+                .from('users_table')
+                .where('email', email)
+                .first();
         },
         findBySessionID: (session) => {
             return knex('users_table')
@@ -54,5 +60,12 @@ module.exports = {
             return knex('user_messages')
                 .insert(message)
         }
+    },
+    profile: {
+        uploadPhoto: function (data) {
+            return knex('profile')
+                .insert(data)
+        }
     }
+
 };

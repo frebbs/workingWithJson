@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const queryDB = require('../db/DBquries');
-// const {isAuth} = require('../helpers/authHelper');
 
 
 router.get('/', async (req, res) => {
@@ -11,7 +10,6 @@ router.get('/', async (req, res) => {
             .getAllByUserID(req.session.profile.id)
             .then(data => { return data })
             .catch(err => { console.log(err)});
-        console.log(userPosts);
             res.render('members/home', {profile: req.session.profile, userPosts});
     } else {
         res.redirect('/login');
@@ -45,6 +43,7 @@ router.get('/logout', async (req, res) => {
             .then(() => {
                 req.session.profile = {};
                 req.session.login = false;
+                req.session.admin = false;
                 res.redirect('/');
             })
             .catch(err => console.log(err));

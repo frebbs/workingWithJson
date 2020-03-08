@@ -6,25 +6,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/members">Home</a>
+                <a class="nav-link" href="/members/admin">Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/members/createpost">Create Post</a>
+                <a class="nav-link" href="/members/admin/getallposts">Search all posts</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/members/profile/<%= profile.id %>">Profile</a>
+                <a class="nav-link" href="/members/admin/getallusers">Search all users</a>
             </li>
-            <% if (profile.access_level === 0) {%>
             <li class="nav-item active">
-                <a class="nav-link" href="/members/admin/">Super Admin Page</a>
+                <a class="nav-link" href="/members/admin/editprofile">Edit user profile</a>
             </li>
-            <% } else if (profile.access_level === 1) { %>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/members/admin/">Admin Page</a>
-                </li>
-            <% } %>
             <li class="nav-item active">
-                <a class="nav-link" href="/members/logout">Logout</a>
+                <a class="nav-link" href="/members/">Back to Members Page</a>
             </li>
         </ul>
     </div>

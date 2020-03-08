@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const queryDB = require('../db/DBquries');
+const formidable = require('formidable');
+
+// Maybe remove this? Change to other authentication verify methods
 const {isAuth} = require('../helpers/authHelper');
 
-const SALT = 10
+const SALT = 10;
 
 
 router.post('/createaccount', async(req, res) => {
@@ -12,19 +15,19 @@ router.post('/createaccount', async(req, res) => {
     let errors = [];
 
     if (req.body.password1 !== req.body.password2) {
-        errors.push({text: "Passwords didnt match, try again"})
+        errors.push({text: "Passwords didnt match, try again"});
     }
 
     if(!req.body.first_name) {
-        errors.push({text: "Please supply a First name to continue"})
+        errors.push({text: "Please supply a First name to continue"});
     }
 
     if(!req.body.last_name) {
-        errors.push({text: "Please supply a Last name to continue"})
+        errors.push({text: "Please supply a Last name to continue"});
     }
 
     if(!req.body.email) {
-        errors.push({text: "You must supply a valid Email Address to create an account"})
+        errors.push({text: "You must supply a valid Email Address to create an account"});
     }
 
     if (errors.length > 0 ) {
@@ -35,13 +38,14 @@ router.post('/createaccount', async(req, res) => {
             email: req.body.email
         })
     } else {
-        req.body.password1 = await bcrypt.hash(req.body.password1, SALT)
+        req.body.password1 = await bcrypt.hash(req.body.password1, SALT);
 
         const newUser = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             password: req.body.password1,
-            email: req.body.email
+            email: req.body.email,
+            access_level: 5
         };
 
     await queryDB.json
@@ -86,17 +90,17 @@ router.post('/login', async (req, res) => {
                 message: 'Opps, Found no users with that email address',
                 ERROR: err
             })
-        })
+        });
 
     if(findUser) {
-        let matchedPassword = await bcrypt.compare(req.body.password, findUser.password)
+        let matchedPassword = await bcrypt.compare(req.body.password, findUser.password);
         if(matchedPassword) {
             await queryDB.json
                 .addSession(findUser.id, req.sessionID)
                 .then(() => {
-                    const { first_name, last_name, id, email, access_level } = findUser
-                    req.session.login = true
-                    req.session.profile = {id, first_name, last_name, email, access_level }
+                    const { first_name, last_name, id, email, access_level } = findUser;
+                    req.session.login = true;
+                    req.session.profile = {id, first_name, last_name, email, access_level };
 
                     return res.redirect('/members')
                 })
@@ -140,6 +144,29 @@ router.put('/update/:id', async(req, res) => {
     } else {
         res.redirect('/login')
     }
+});
+
+router.post('/uploadphoto', async(req, res, next) => {
+
+    const form = formidable({multiple: false, uploadDir: process.env.PWD +  '/public/user_uploads', keepExtensions: true});
+    form.parse(req, async (err, fields, files) => {
+        if (err) {
+            next(err);
+        }
+
+        const userProfile = {
+            users_id: req.session.profile.id,
+            description: fields.description,
+            img_name: files.file.name,
+            img_type: files.file.type,
+            img_path: files.file.path
+        };
+
+        await queryDB.profile
+            .uploadPhoto(userProfile)
+            .catch(err => console.log(err))
+    });
+    res.redirect('/members')
 });
 
 module.exports = router;

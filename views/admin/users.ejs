@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search Page</title>
+</head>
+<%- include ('partials/bootstrapCSS.ejs') %>
+<body>
+<%- include ('partials/navbar.ejs') %>
+
+<div class="container-fluid pt-5" style="max-width: 80%">
+    <table class="table text-center">
+        <thead>
+        <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Email</th>
+            <th scope="col">Access</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% foundUsers.forEach( (data) => { %>
+
+        <tr>
+            <th scope="row"><%= data.id %></th>
+            <td><%= data.first_name %></td>
+            <td><%= data.last_name %></td>
+            <td><%= data.email %></td>
+            <td><%= data.access_level %></td>
+        </tr>
+        <% }) %>
+
+        </tbody>
+    </table>
+</div>
+
+<%- include ('partials/bootstrapJS.ejs') %>
+</body>
+</html>
